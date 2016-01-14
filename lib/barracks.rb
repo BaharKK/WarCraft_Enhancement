@@ -1,8 +1,9 @@
 class Barracks
-    attr_accessor :gold , :food
-    def initialize(gold=1000,food=80)
-        @gold = gold
+    attr_accessor :gold , :food, :health_points, :lumber
+    def initialize(gold=1000,food=80, health_points=500,lumber=500)
         @food = food
+        @health_points = health_points
+        @lumber = lumber
     end
 
  
@@ -22,6 +23,16 @@ class Barracks
         end
     end
 
+
+    def train_seige_engine 
+        if can_train_seige_engine?
+            @gold = @gold - 200
+            @food = @food - 3
+            @lumber = @lumber - 60
+            Seige_Engine.new 
+        end
+    end
+
     def can_train_peasant? 
         (gold >= 90) && (food >= 5)
     end
@@ -34,4 +45,9 @@ class Barracks
         #     false
         # end
     end
+    
+    def can_train_seige_engine?
+        (gold >= 200) && (food >= 3) && (lumber >= 60)
+    end
+
 end

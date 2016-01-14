@@ -1,3 +1,4 @@
+require_relative 'barracks'
 class Footman < Unit 
     attr_accessor :health_points, :attack_power
 
@@ -10,12 +11,20 @@ class Footman < Unit
     # class << self
     
     def attack!(enemy)
-     enemy.damage(10)
+        case enemy
+        when Barracks then enemy.damage (attack_power / 2.0).ceil
+        else
+            enemy.damage(attack_power)
+        end
+        # if  enemy.is_a?(Barracks)
+        #     enemy.damage(attack_power / 2)
+        # else
+        #     enemy.damage(attack_power)
+        # end
     end
 
     def damage(unit)
-    @health_points = health_points - unit
+        @health_points = health_points - unit
     end
-
 
 end
